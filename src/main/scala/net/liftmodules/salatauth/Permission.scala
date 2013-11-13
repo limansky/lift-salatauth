@@ -16,9 +16,23 @@
 
 package net.liftmodules.salatauth
 
+/**
+ * Permissions are defied as triplets of domain, action and entity.  Domain is
+ * the only mandatory part of permission.  All other parts by default replaced
+ * with wildcard symbol (*). For example:
+ * {{{
+ *  Permission("printer") == Permission("printer", "*") == Permission("printer", "*", "*")
+ * }}}
+ *
+ * The other examples:
+ * {{{
+ * Permission("goods", "view")
+ * Permission("users", "edit", "123")
+ * }}}
+ */
 case class Permission(domain: String,
-                      action: String = Permission.wildcardToken,
-                      entity: String = Permission.wildcardToken) {
+    action: String = Permission.wildcardToken,
+    entity: String = Permission.wildcardToken) {
 
   def implies(p: Permission): Boolean = {
     p match {
@@ -45,10 +59,22 @@ case class Permission(domain: String,
   def implies(ps: Iterable[Permission]): Boolean = ps.exists(this.implies)
 }
 
-
 object Permission {
   val wildcardToken = "*"
   val all = Permission(wildcardToken)
 }
 
+/**
+ * User role entity class
+ *
+ * It's up to you to store the roles into MongoDB. For example you can use
+ * SalatDAO:
+ * {{{
+ *   object RoleDAO extends SalatDAO[Role, ObjectId](collection = MongoConnection()("mydb")("roles"))
+ * }}}
+ *
+ * @param _id the role name is the primary id for the collection
+ * @param comment role description or other comment
+ * @param permissions a set of permissions for this role
+ */
 case class Role(_id: String, comment: String, permissions: List[Permission])

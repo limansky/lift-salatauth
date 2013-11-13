@@ -20,19 +20,50 @@ import net.liftweb.util.Helpers._
 import org.mindrot.jbcrypt.BCrypt
 import com.mongodb.casbah.query.Imports._
 
+/**
+ * User entity prototype.
+ *
+ * You should define your entity extending this class. For example:
+ * {{{
+ * case class User(
+ *   val _id: ObjectId,
+ *   override val username: String,
+ *   override val password: String,
+ *   val realName: String,
+ *   override val email: String,
+ *   override val roles: Set[String],
+ *   val phone: String
+ * ) extends ProtoUser(username, password, email, roles {
+ *   override def findRoles(query: DBObject) = RolesDAO.find(query).toList
+ * }
+ * }}}
+ */
 abstract class ProtoUser(val username: String,
-                         val password: String,
-                         val email: String,
-                         val roles: Set[String]) {
+    val password: String,
+    val email: String,
+    val roles: Set[String]) {
 
+  /**
+   * Checks if the password match with this user password
+   * @param pass Password to be checked
+   */
   def passwordMatch(pass: String): Boolean = {
     if (pass.length > 0 && password.length > 0) {
       tryo(BCrypt.checkpw(pass, password)).openOr(false)
     } else false
   }
 
+  /**
+   * Searches for roles in MongoDB
+   *
+   * This method should be implemented according to your database scheme.
+   */
   def findRoles(query: DBObject): List[Role]
 
   lazy val perms = findRoles("_id" $in roles).flatMap(_.permissions).toSet
+
+  /**
+   * Returns a set of permissions for this user.
+   */
   def permissions = perms
 }

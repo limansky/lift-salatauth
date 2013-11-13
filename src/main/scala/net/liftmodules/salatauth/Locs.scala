@@ -22,7 +22,7 @@ import net.liftweb.http.S
 import net.liftweb.http.RedirectWithState
 import net.liftweb.http.RedirectState
 import net.liftweb.http.SessionVar
-import net.liftweb.common.{Box, Empty, Full}
+import net.liftweb.common.{ Box, Empty, Full }
 import net.liftweb.util.Helpers
 
 trait Locs[UserIdType, UserType <: ProtoUser] {
@@ -36,7 +36,7 @@ trait Locs[UserIdType, UserType <: ProtoUser] {
   def RedirectToIndex = RedirectResponse(indexUrl)
 
   def RedirectToIndexWithCookies =
-    RedirectResponse(indexUrl, S.responseCookies:_*)
+    RedirectResponse(indexUrl, S.responseCookies: _*)
 
   def RedirectToLoginWithReferrer = {
     val uri = S.uriAndQueryString
@@ -49,7 +49,8 @@ trait Locs[UserIdType, UserType <: ProtoUser] {
 
   def HasAnyPermission(permissions: Permission*) = If({
     val ps = permissions.toList
-    () => ps.exists(loginManager.hasPermission)}, () => RedirectToLoginWithReferrer
+    () => ps.exists(loginManager.hasPermission)
+  }, () => RedirectToLoginWithReferrer
   )
 
   def RequireLoggedIn = If(
@@ -64,6 +65,19 @@ trait Locs[UserIdType, UserType <: ProtoUser] {
 
 }
 
+/**
+ * SessionVar contains requested URI when user was redirected to login page.
+ *
+ * For example, somewhere in your login page snippet:
+ * {{{
+ *   def loginUser(user: String, password: String) = {
+ *     UserDAO.findOne(MongoDBObject("username" -> user)) match {
+ *       case Some(u) if (u.passwordMatch(password)) => S.redirectTo(LoginRedirect or "")
+ *       case _ => S.error("Invalid user name or password")
+ *     }
+ *   }
+ * }}}
+ */
 object LoginRedirect extends SessionVar[Box[String]](Empty) {
   override def __nameSalt = Helpers.nextFuncName
 }

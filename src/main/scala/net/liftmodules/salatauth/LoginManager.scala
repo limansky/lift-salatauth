@@ -22,7 +22,7 @@ import net.liftweb.http.CleanRequestVarOnSessionTransition
 import net.liftweb.http.S
 import net.liftweb.util.Helpers
 import net.liftweb.util.Helpers._
-import net.liftweb.common.{Box, Empty, Full}
+import net.liftweb.common.{ Box, Empty, Full }
 import org.mindrot.jbcrypt.BCrypt
 
 trait LoginManager[UserIdType, UserType <: ProtoUser] {
@@ -33,7 +33,7 @@ trait LoginManager[UserIdType, UserType <: ProtoUser] {
   // current userId stored in the session.
   private object curUserId extends SessionVar[Box[UserIdType]](Empty)
   private object curUser extends RequestVar[Box[UserType]](curUserId.flatMap(findUserById))
-    with CleanRequestVarOnSessionTransition {
+      with CleanRequestVarOnSessionTransition {
 
     override lazy val __nameSalt = Helpers.nextFuncName
   }
