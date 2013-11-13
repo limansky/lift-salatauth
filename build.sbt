@@ -27,3 +27,5 @@ libraryDependencies ++= Seq(
   "com.novus"       %% "salat"          % "1.9.4"   % "compile",
   "org.scalatest"   %% "scalatest"      % "1.9.2"   % "test"
 )
+
+scalariformSettings
