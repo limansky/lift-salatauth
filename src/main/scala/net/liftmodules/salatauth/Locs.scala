@@ -27,8 +27,8 @@ import net.liftweb.util.Helpers
 
 trait Locs[UserIdType, UserType <: ProtoUser] {
   val loginManager: LoginManager[UserIdType, UserType]
-  val indexUrl = "/"
-  val loginUrl = "/login"
+  private lazy val indexUrl = SalatAuth.indexUrl.vend
+  private lazy val loginUrl = SalatAuth.loginUrl.vend
 
   protected def DisplayError(message: String) = () =>
     RedirectWithState(indexUrl, RedirectState(() => S.error(S ? message)))
