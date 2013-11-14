@@ -1,10 +1,24 @@
 name := "salatauth"
 
+description := "Lift Salat authentication and authorization module"
+
 organization := "net.liftmodules"
 
 version := "1.0-SNAPSHOT"
 
-liftVersion <<= liftVersion ?? "2.6-SNAPSHOT"
+licenses += ("Apache 2.0 License", url("http://www.apache.org/licenses/LICENSE-2.0"))
+
+homepage := Some(url("http://github.com/limansky/lift-salatauth"))
+
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/limansky/lift-salatauth"),
+    "scm:git:https://github.com/limansky/lift-salatauth.git",
+    Some("scm:git:git@github.com:limansky/lift-salatauth.git")
+  )
+)
+
+liftVersion <<= liftVersion ?? "2.5.1"
 
 liftEdition <<= liftVersion apply { _.substring(0,3) }
 
@@ -24,7 +38,7 @@ libraryDependencies <+= liftVersion { v =>
 
 libraryDependencies ++= Seq(
   "org.mindrot"     %  "jbcrypt"        % "0.3m"    % "compile",
-  "com.novus"       %% "salat"          % "1.9.4"   % "compile",
+  "com.novus"       %% "salat"          % "1.9.4"   % "provided",
   "org.scalatest"   %% "scalatest"      % "1.9.2"   % "test"
 )
 
