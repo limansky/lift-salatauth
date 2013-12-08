@@ -19,6 +19,9 @@ package net.liftmodules.salatauth
 import net.liftweb.util.Helpers._
 import org.mindrot.jbcrypt.BCrypt
 import com.mongodb.casbah.query.Imports._
+import org.bson.types.ObjectId
+import com.novus.salat._
+import com.novus.salat.global._
 
 /**
  * User entity prototype.
@@ -33,15 +36,19 @@ import com.mongodb.casbah.query.Imports._
  *   override val email: String,
  *   override val roles: Set[String],
  *   val phone: String
- * ) extends ProtoUser(username, password, email, roles {
- *   override def findRoles(query: DBObject) = RolesDAO.find(query).toList
- * }
+ * ) extends ProtoUser(username, password, email, roles)
  * }}}
+ *
+ * To allow your roles be serialized you have to set SalatAuth.rolesCollections
+ * in your Boot.scala.
  */
-abstract class ProtoUser(val username: String,
+abstract class ProtoUser(
+    val username: String,
     val password: String,
     val email: String,
     val roles: Set[String]) {
+
+  val rolesCollection = SalatAuth.rolesCollection.vend
 
   /**
    * Checks if the password match with this user password
@@ -55,10 +62,10 @@ abstract class ProtoUser(val username: String,
 
   /**
    * Searches for roles in MongoDB
-   *
-   * This method should be implemented according to your database scheme.
    */
-  def findRoles(query: DBObject): List[Role]
+  def findRoles(query: DBObject): List[Role] = {
+    rolesCollection.toList.flatMap(_.find(query).map(dbo => grater[Role].asObject(dbo)).toList)
+  }
 
   lazy val perms = findRoles("_id" $in roles).flatMap(_.permissions).toSet
 
@@ -66,4 +73,15 @@ abstract class ProtoUser(val username: String,
    * Returns a set of permissions for this user.
    */
   def permissions = perms
+}
+
+object ProtoUser {
+
+  /**
+   * Helper function to hash password
+   *
+   * @param password to be hashed
+   */
+  def hashPassword(password: String): String =
+    tryo(BCrypt.hashpw(password, BCrypt.gensalt(10))).openOr("")
 }

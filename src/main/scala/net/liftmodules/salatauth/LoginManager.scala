@@ -21,13 +21,25 @@ import net.liftweb.http.RequestVar
 import net.liftweb.http.CleanRequestVarOnSessionTransition
 import net.liftweb.http.S
 import net.liftweb.util.Helpers
-import net.liftweb.util.Helpers._
 import net.liftweb.common.{ Box, Empty, Full }
-import org.mindrot.jbcrypt.BCrypt
 
-trait LoginManager[UserIdType, UserType <: ProtoUser] {
+/**
+ * Base login manager
+ *
+ * In most cases you should use this trait as basic for your login mananges.
+ */
+trait LoginManager[UserType <: ProtoUser, UserIdType] {
 
+  /**
+   * Search user by given ID
+   *
+   * @param id user id to be searched
+   */
   def findUserById(id: UserIdType): Option[UserType]
+
+  /**
+   * Returns ID of the given user
+   */
   def getUserId(user: UserType): UserIdType
 
   // current userId stored in the session.
@@ -42,8 +54,17 @@ trait LoginManager[UserIdType, UserType <: ProtoUser] {
   def onLogOut: List[Box[UserType] => Unit] = Nil
 
   def currentUserId: Box[UserIdType] = curUserId.is
+
+  /**
+   * Returns currently logged in user
+   */
   def currentUser: Box[UserType] = curUser.is
 
+  /**
+   * Log user in to system
+   *
+   * @param user user to be logged in
+   */
   def logUserIn(user: UserType): Unit = {
     curUserId.remove
     curUser.remove
@@ -52,6 +73,9 @@ trait LoginManager[UserIdType, UserType <: ProtoUser] {
     onLogIn.foreach(_(user))
   }
 
+  /**
+   * Log user out
+   */
   def logUserOut(): Unit = {
     onLogOut.foreach(_(currentUser))
     curUserId.remove
@@ -59,12 +83,18 @@ trait LoginManager[UserIdType, UserType <: ProtoUser] {
     S.session.foreach(_.destroySession)
   }
 
+  /**
+   * Checks if there any user logged in.
+   */
   def isLoggedIn: Boolean = currentUserId.isDefined
 
+  /**
+   * Checks if the current user has permission
+   *
+   * @param permission required permission
+   */
   def hasPermission(permission: Permission): Boolean = {
     currentUser.map(u => permission.implies(u.permissions)).openOr(false)
   }
 
-  def hashPassword(password: String): String =
-    tryo(BCrypt.hashpw(password, BCrypt.gensalt(10))).openOr("")
 }

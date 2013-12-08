@@ -25,8 +25,10 @@ import net.liftweb.http.SessionVar
 import net.liftweb.common.{ Box, Empty, Full }
 import net.liftweb.util.Helpers
 
-trait Locs[UserIdType, UserType <: ProtoUser] {
-  val loginManager: LoginManager[UserIdType, UserType]
+object Locs extends Locs
+
+trait Locs {
+  private lazy val loginManager = SalatAuth.loginManager.vend
   private lazy val indexUrl = SalatAuth.indexUrl.vend
   private lazy val loginUrl = SalatAuth.loginUrl.vend
 
