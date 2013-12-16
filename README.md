@@ -27,7 +27,7 @@ case class User(
 class Boot {
   def boot() {
     ...
-    SalatAuth.rolesCollection.default.set(MongoConnection()("mydb")("roles"))
+    SalatAuth.rolesCollection.default.set(Some(MongoConnection()("mydb")("roles")))
     ...
 ```
 
@@ -38,7 +38,7 @@ class Boot {
   Login manager is a core object of SalatAuth module.  You can use `SimpleLoginManager` with `SimpleUser`s or implement your own one for custom entities.  If you use "Simple" solution than you must define a collection in Boot:
 
 ```Scala
-    SalatAuth.simpleCollection.default.set(MongoConnection()("mydb")("users"))
+    SalatAuth.simpleCollection.default.set(Some(MongoConnection()("mydb")("users")))
 ```
 
   Else, you need to define your LoginManager to find users in MongoDB:
