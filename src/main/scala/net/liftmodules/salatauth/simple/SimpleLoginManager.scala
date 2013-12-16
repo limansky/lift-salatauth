@@ -24,7 +24,7 @@ import com.mongodb.casbah.Imports._
 
 object SimpleLoginManager extends LoginManager[SimpleUser, ObjectId] {
 
-  val collection = SalatAuth.simpleCollection.vend
+  lazy val collection = SalatAuth.simpleCollection.vend
 
   override def findUserById(id: ObjectId): Option[SimpleUser] = {
     collection.flatMap(_.findOneByID(id)).map(dbo => grater[SimpleUser].asObject(dbo))

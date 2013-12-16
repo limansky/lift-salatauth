@@ -25,20 +25,22 @@ object SalatAuth extends Factory {
   val indexUrl = new FactoryMaker[String]("/") {}
   val loginUrl = new FactoryMaker[String]("/login") {}
   val logoutUrl = new FactoryMaker[String]("/logout") {}
-  val loginManager = new FactoryMaker[LoginManager[_, _]](SimpleLoginManager) {}
   val rolesCollection = new FactoryMaker[Option[MongoCollection]](None) {}
   val simpleCollection = new FactoryMaker[Option[MongoCollection]](None) {}
+  val loginManager = new FactoryMaker[LoginManager[_, _]](SimpleLoginManager) {}
 
   def init(
     indexUrl: String = "/",
     loginUrl: String = "/login",
     logoutUrl: String = "/logout",
     rolesCollection: Option[MongoCollection],
-    simpleCollection: Option[MongoCollection]): Unit = {
+    simpleCollection: Option[MongoCollection],
+    loginManager: LoginManager[_, _]): Unit = {
     this.indexUrl.default.set(indexUrl)
     this.loginUrl.default.set(loginUrl)
     this.logoutUrl.default.set(logoutUrl)
     this.rolesCollection.default.set(rolesCollection)
     this.simpleCollection.default.set(simpleCollection)
+    this.loginManager.default.set(SimpleLoginManager)
   }
 }
