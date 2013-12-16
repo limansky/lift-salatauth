@@ -32,7 +32,7 @@ trait Locs {
   private lazy val indexUrl = SalatAuth.indexUrl.vend
   private lazy val loginUrl = SalatAuth.loginUrl.vend
 
-  protected def DisplayError(message: String) = () =>
+  def RedirectWithError(message: String) = () =>
     RedirectWithState(indexUrl, RedirectState(() => S.error(S ? message)))
 
   def RedirectToIndex = RedirectResponse(indexUrl)
@@ -59,12 +59,11 @@ trait Locs {
     () => loginManager.isLoggedIn, () => RedirectToLoginWithReferrer
   )
 
-  protected def logoutLocParams = RequireLoggedIn ::
+  def logoutLocParams = RequireLoggedIn ::
     EarlyResponse(() => {
       if (loginManager.isLoggedIn) { loginManager.logUserOut() }
       Full(RedirectToIndexWithCookies)
     }) :: Nil
-
 }
 
 /**
