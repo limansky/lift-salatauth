@@ -24,5 +24,10 @@ case class SimpleUser(
   val _id: ObjectId = ObjectId.get,
   override val username: String,
   override val password: String,
-  override val email: String,
-  override val roles: Set[String]) extends ProtoUser(username, password, email, roles)
+  val email: String,
+  override val roles: Set[String]) extends ProtoUser(username, password, roles)
+
+object SimpleUser {
+  def apply(username: String, password: String, email: String, roles: Set[String]): SimpleUser =
+    SimpleUser(ObjectId.get, username, password, email, roles)
+}

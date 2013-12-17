@@ -33,10 +33,10 @@ import com.novus.salat.global._
  *   override val username: String,
  *   override val password: String,
  *   val realName: String,
- *   override val email: String,
+ *   val email: String,
  *   override val roles: Set[String],
  *   val phone: String
- * ) extends ProtoUser(username, password, email, roles)
+ * ) extends ProtoUser(username, password, roles)
  * }}}
  *
  * To allow your roles be serialized you have to set SalatAuth.rolesCollections
@@ -45,7 +45,6 @@ import com.novus.salat.global._
 abstract class ProtoUser(
     val username: String,
     val password: String,
-    val email: String,
     val roles: Set[String]) {
 
   val rolesCollection = SalatAuth.rolesCollection.vend
