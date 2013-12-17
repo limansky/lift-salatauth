@@ -97,4 +97,8 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
     currentUser.map(u => permission.implies(u.permissions)).openOr(false)
   }
 
+  def hasRole(role: String): Boolean = {
+    currentUser.map(_.roles.contains(role)).openOr(false)
+  }
+
 }
