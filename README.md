@@ -86,7 +86,8 @@ def siteMap() = SiteMap(
   Menu.i("messages") / "messages" >> RequireLoggedIn,
   Menu.i("users") / "users" >> HasRole("admin"),
   Menu.i("reports") / "reports" >> HasPermission("Reports" : "view")
-  ...
+  buildLogin("login", Hidden :: Nil),
+  buildLogout("logout", Nil)
   )
 ```
 

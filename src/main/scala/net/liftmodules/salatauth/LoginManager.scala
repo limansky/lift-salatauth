@@ -42,7 +42,6 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
    */
   def getUserId(user: UserType): UserIdType
 
-  // current userId stored in the session.
   private object curUserId extends SessionVar[Box[UserIdType]](Empty)
   private object curUser extends RequestVar[Box[UserType]](curUserId.flatMap(findUserById))
       with CleanRequestVarOnSessionTransition {
@@ -50,7 +49,14 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
     override lazy val __nameSalt = Helpers.nextFuncName
   }
 
+  /**
+   * List of additional actions to be performed on user login
+   */
   def onLogIn: List[UserType => Unit] = Nil
+
+  /**
+   * List of additional actions to be performed on user logout.
+   */
   def onLogOut: List[Box[UserType] => Unit] = Nil
 
   def currentUserId: Box[UserIdType] = curUserId.is
@@ -97,6 +103,11 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
     currentUser.map(u => permission.implies(u.permissions)).openOr(false)
   }
 
+  /**
+   * Checks if the current user has specified role
+   *
+   * @param role required role
+   */
   def hasRole(role: String): Boolean = {
     currentUser.map(_.roles.contains(role)).openOr(false)
   }

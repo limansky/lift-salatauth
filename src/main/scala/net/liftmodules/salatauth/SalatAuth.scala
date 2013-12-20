@@ -20,13 +20,47 @@ import net.liftweb.http.Factory
 import com.mongodb.casbah.MongoCollection
 import simple.SimpleLoginManager
 
+/**
+ * Stores parameter of SalatAuth module
+ */
 object SalatAuth extends Factory {
 
+  /**
+   * Path to index page.
+   *
+   * Default: "/"
+   */
   val indexUrl = new FactoryMaker[String]("/") {}
+
+  /**
+   * Path to login page.
+   *
+   * Default: "/login"
+   */
   val loginUrl = new FactoryMaker[String]("/login") {}
+
+  /**
+   * Path to logout page.
+   *
+   * Default: "/logout"
+   */
   val logoutUrl = new FactoryMaker[String]("/logout") {}
+
+  /**
+   * Instance of MongoCollection to store roles
+   */
   val rolesCollection = new FactoryMaker[Option[MongoCollection]](None) {}
+
+  /**
+   * Instance of MongoCollection to store users if you are using SimpleLoginManager
+   */
   val simpleCollection = new FactoryMaker[Option[MongoCollection]](None) {}
+
+  /**
+   * Instance of LoginManager to be used.
+   *
+   * Default: SimpleLoginManager
+   */
   val loginManager = new FactoryMaker[LoginManager[_, _]](SimpleLoginManager) {}
 
   def init(
