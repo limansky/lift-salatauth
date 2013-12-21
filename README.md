@@ -2,6 +2,29 @@
 
    Authentication and authorization module for [Lift][Lift] web framework based on [Salat][Salat] library.  This project inspired by [lift-mongoauth][lift-mongoauth] module, but I removed a lot of things, which I suppose is not related to authorization itself (however, some features are not implemented, just because :) ).  The goal is to avoid using different ORMs in project using Salat.
 
+## Installing
+
+  The module is available in Sonatype repository. So, if you using sbt just add it to libraryDependencies.
+
+For Lift 2.5.x:
+
+```
+"net.liftmodules" %% "salatauth_2.5" % "1.0"
+
+```
+For Lift 2.6.x:
+
+```
+"net.liftmodules" %% "salatauth_2.6" % "1.0"
+
+```
+For Lift 3.0.x:
+
+```
+"net.liftmodules" %% "salatauth_3.0" % "1.0"
+
+```
+
 ## Usage
 
   Lift SalatAuth provides several base classes and default implementations for them. You should choose if you want to implement them yourself or use default implementation.
@@ -33,7 +56,7 @@ class Boot {
 
   If the default field set of `ProtoUser` is enough for you you can not define your own user class, but use `SimpleUser` instead.
 
-### Permisssions model
+### Permissions model
 
 Each user has a list of roles defined as strings.  However role itself is a case class.  The role name is an `_id` for a role.  As it was described you need to set roles collection in boot to allow roles works properly.  Roles contains a list of `Permission`s.  Permissions are defined as a triplets of domain, action and entity.  
 

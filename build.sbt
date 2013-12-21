@@ -4,19 +4,11 @@ description := "Lift Salat authentication and authorization module"
 
 organization := "net.liftmodules"
 
-version := "1.0-SNAPSHOT"
+version := "1.0"
 
 licenses += ("Apache 2.0 License", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 homepage := Some(url("http://github.com/limansky/lift-salatauth"))
-
-scmInfo := Some(
-  ScmInfo(
-    url("https://github.com/limansky/lift-salatauth"),
-    "scm:git:https://github.com/limansky/lift-salatauth.git",
-    Some("scm:git:git@github.com:limansky/lift-salatauth.git")
-  )
-)
 
 liftVersion <<= liftVersion ?? "2.5.1"
 
@@ -26,7 +18,7 @@ moduleName <<= (name, liftEdition) { (n, e) => n + "_" + e }
 
 scalaVersion := "2.10.3"
 
-crossScalaVersions := Seq("2.10.0", "2.9.2")
+crossScalaVersions := Seq("2.9.2")
 
 resolvers += "CB Central Mirror" at "http://repo.cloudbees.com/content/groups/public"
 
@@ -43,3 +35,32 @@ libraryDependencies ++= Seq(
 )
 
 scalariformSettings
+
+publishMavenStyle := true
+
+publishArtifact in Test := false
+
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/limansky/lift-salatauth"),
+    "scm:git:https://github.com/limansky/lift-salatauth.git",
+    Some("scm:git:git@github.com:limansky/lift-salatauth.git")
+  )
+)
+
+publishTo := {
+  val nexus = "http://oss.sonatype.org/"
+  if (version.value.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+
+pomExtra := (
+  <developers>
+    <developer>
+      <id>limansky</id>
+      <name>Mike Limansky</name>
+      <url>http://github.com/limansky</url>
+    </developer>
+  </developers>)
