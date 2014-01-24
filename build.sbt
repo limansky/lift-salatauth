@@ -30,7 +30,7 @@ libraryDependencies <+= liftVersion { v =>
 
 libraryDependencies ++= Seq(
   "org.mindrot"     %  "jbcrypt"        % "0.3m"    % "compile",
-  "com.novus"       %% "salat"          % "1.9.4"   % "provided",
+  "com.novus"       %% "salat"          % "1.9.5"   % "provided",
   "org.scalatest"   %% "scalatest"      % "1.9.2"   % "test"
 )
 
