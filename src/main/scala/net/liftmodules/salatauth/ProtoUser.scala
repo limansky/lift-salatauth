@@ -66,7 +66,7 @@ abstract class ProtoUser(
     rolesCollection.toList.flatMap(_.find(query).map(dbo => grater[Role].asObject(dbo)).toList)
   }
 
-  lazy val perms = findRoles("_id" $in roles).flatMap(_.permissions).toSet
+  private lazy val perms = findRoles("_id" $in roles).flatMap(_.permissions).toSet
 
   /**
    * Returns a set of permissions for this user.

@@ -47,6 +47,7 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
       with CleanRequestVarOnSessionTransition {
 
     override lazy val __nameSalt = Helpers.nextFuncName
+    override def logUnreadVal = false
   }
 
   /**
