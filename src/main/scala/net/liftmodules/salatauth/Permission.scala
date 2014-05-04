@@ -65,12 +65,17 @@ object Permission {
 }
 
 /**
- * User role entity class
+ * User role entity class.
  *
  * It's up to you to store the roles into MongoDB. For example you can use
  * SalatDAO:
  * {{{
  *   object RoleDAO extends SalatDAO[Role, ObjectId](collection = MongoConnection()("mydb")("roles"))
+ * }}}
+ *
+ * Also you need to define rolesCollection in your Boot class:
+ * {{{
+ *   SalatAuth.rolesCollection.default.set(myRoleCollection)
  * }}}
  *
  * @param _id the role name is the primary id for the collection

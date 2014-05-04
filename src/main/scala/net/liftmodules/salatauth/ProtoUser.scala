@@ -47,7 +47,7 @@ abstract class ProtoUser(
     val password: String,
     val roles: Set[String]) {
 
-  val rolesCollection = SalatAuth.rolesCollection.vend
+  private lazy val rolesCollection = SalatAuth.rolesCollection.vend
 
   /**
    * Checks if the password match with this user password

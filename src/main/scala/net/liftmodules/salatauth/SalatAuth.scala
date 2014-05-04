@@ -19,6 +19,8 @@ package net.liftmodules.salatauth
 import net.liftweb.http.Factory
 import com.mongodb.casbah.MongoCollection
 import simple.SimpleLoginManager
+import org.joda.time.ReadablePeriod
+import org.joda.time.Days
 
 /**
  * Stores parameter of SalatAuth module
@@ -52,6 +54,17 @@ object SalatAuth extends Factory {
   val rolesCollection = new FactoryMaker[Option[MongoCollection]](None) {}
 
   /**
+   * Instance of MongoCollection to store session information
+   */
+  val sessionsCollection = new FactoryMaker[Option[MongoCollection]](None) {}
+
+  val sessionTtl = new FactoryMaker[ReadablePeriod](Days.days(30)) {}
+
+  val sessionCookieName = new FactoryMaker[String]("SalatAuth") {}
+  val sessionCookiePath = new FactoryMaker[String]("/") {}
+  val sessionCookieDomain = new FactoryMaker[Option[String]](None) {}
+
+  /**
    * Instance of MongoCollection to store users if you are using SimpleLoginManager
    */
   val simpleCollection = new FactoryMaker[Option[MongoCollection]](None) {}
@@ -68,12 +81,16 @@ object SalatAuth extends Factory {
     loginUrl: String = "/login",
     logoutUrl: String = "/logout",
     rolesCollection: Option[MongoCollection],
+    sessionCollection: Option[MongoCollection],
+    seesionTtl: ReadablePeriod,
     simpleCollection: Option[MongoCollection],
     loginManager: LoginManager[_, _]): Unit = {
     this.indexUrl.default.set(indexUrl)
     this.loginUrl.default.set(loginUrl)
     this.logoutUrl.default.set(logoutUrl)
     this.rolesCollection.default.set(rolesCollection)
+    this.sessionsCollection.default.set(sessionCollection)
+    this.sessionTtl.default.set(seesionTtl)
     this.simpleCollection.default.set(simpleCollection)
     this.loginManager.default.set(SimpleLoginManager)
   }

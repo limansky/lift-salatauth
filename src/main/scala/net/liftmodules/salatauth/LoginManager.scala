@@ -22,6 +22,7 @@ import net.liftweb.http.CleanRequestVarOnSessionTransition
 import net.liftweb.http.S
 import net.liftweb.util.Helpers
 import net.liftweb.common.{ Box, Empty, Full }
+import net.liftweb.http.Req
 
 /**
  * Base login manager
@@ -60,6 +61,9 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
    */
   def onLogOut: List[Box[UserType] => Unit] = Nil
 
+  /**
+   * Currently logged in user id
+   */
   def currentUserId: Box[UserIdType] = curUserId.is
 
   /**
@@ -72,12 +76,16 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
    *
    * @param user user to be logged in
    */
-  def logUserIn(user: UserType): Unit = {
+  def logUserIn(user: UserType, authenticate: Boolean = false, remember: Boolean = false)
+               (implicit m: Manifest[UserIdType]): Unit = {
     curUserId.remove
     curUser.remove
     curUserId(Full(getUserId(user)))
     curUser(Full(user))
     onLogIn.foreach(_(user))
+    if (remember) {
+      Session.createSession(getUserId(user))
+    }
   }
 
   /**
@@ -111,6 +119,17 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
    */
   def hasRole(role: String): Boolean = {
     currentUser.map(_.roles.contains(role)).openOr(false)
+  }
+
+  /**
+   * Check if there is an existing session and log user in if it's
+   * not expired. Usually you should setup it as early stateful hook:
+   * {{{
+   *   LiftRules.earlyInStateful.append(MyLoginManager.checkSession)
+   * }}}
+   */
+  def checkSession()(implicit m: Manifest[UserIdType]): Box[Req] => Unit = { _ =>
+    Session.get.flatMap(s => findUserById(s.userId)).foreach(user => logUserIn(user, false))
   }
 
 }
