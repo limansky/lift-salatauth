@@ -16,7 +16,7 @@ liftEdition <<= liftVersion apply { _.substring(0,3) }
 
 moduleName <<= (name, liftEdition) { (n, e) => n + "_" + e }
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.10.4"
 
 crossScalaVersions := Seq("2.9.2")
 
@@ -30,7 +30,7 @@ libraryDependencies <+= liftVersion { v =>
 
 libraryDependencies ++= Seq(
   "org.mindrot"     %  "jbcrypt"        % "0.3m"    % "compile",
-  "com.novus"       %% "salat"          % "1.9.5"   % "provided",
+  "com.novus"       %% "salat"          % "1.9.7"   % "provided",
   "org.scalatest"   %% "scalatest"      % "1.9.2"   % "test"
 )
 
