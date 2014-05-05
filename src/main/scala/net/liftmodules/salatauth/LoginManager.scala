@@ -44,6 +44,7 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
   def getUserId(user: UserType): UserIdType
 
   private object curUserId extends SessionVar[Box[UserIdType]](Empty)
+  private object authenticated extends SessionVar[Boolean](false)
   private object curUser extends RequestVar[Box[UserType]](curUserId.flatMap(findUserById))
       with CleanRequestVarOnSessionTransition {
 
@@ -71,17 +72,21 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
    */
   def currentUser: Box[UserType] = curUser.is
 
+  def userAuthenticateded: Boolean = authenticated.is
+
   /**
    * Log user in to system
    *
    * @param user user to be logged in
+   * @param authenticate shows if user was authenticated
+   * @param remember shows if the session shall be created
    */
-  def logUserIn(user: UserType, authenticate: Boolean = false, remember: Boolean = false)
-               (implicit m: Manifest[UserIdType]): Unit = {
+  def logUserIn(user: UserType, authenticate: Boolean = false, remember: Boolean = false)(implicit m: Manifest[UserIdType]): Unit = {
     curUserId.remove
     curUser.remove
     curUserId(Full(getUserId(user)))
     curUser(Full(user))
+    authenticated(authenticate)
     onLogIn.foreach(_(user))
     if (remember) {
       Session.createSession(getUserId(user))
@@ -95,6 +100,8 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
     onLogOut.foreach(_(currentUser))
     curUserId.remove
     curUser.remove
+    authenticated.remove
+    Session.dropSession
     S.session.foreach(_.destroySession)
   }
 

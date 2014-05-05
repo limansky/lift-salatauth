@@ -94,6 +94,10 @@ trait Locs {
     () => loginManager.isLoggedIn, () => RedirectToLoginWithReferrer
   )
 
+  def RequireAuthenticated = If(
+    () => loginManager.userAuthenticateded, () => RedirectToLoginWithReferrer
+  )
+
   /**
    * Allows access if user is not logged in.
    */
