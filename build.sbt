@@ -30,9 +30,13 @@ libraryDependencies <+= liftVersion { v =>
 
 libraryDependencies ++= Seq(
   "org.mindrot"     %  "jbcrypt"        % "0.3m"    % "compile",
-  "com.novus"       %% "salat"          % "1.9.7"   % "provided",
   "org.scalatest"   %% "scalatest"      % "1.9.2"   % "test"
 )
+
+libraryDependencies <+= scalaVersion { sv =>
+  val salatV = if (sv == "2.9.2") "1.9.5" else "1.9.7"
+  "com.novus"       %% "salat"          % salatV   % "provided"
+}
 
 scalariformSettings
 
