@@ -60,7 +60,7 @@ object Session {
         dropSession
         None
 
-      case Some(es) if es.aliveTill.compareTo(now) == 1 =>
+      case Some(es) if es.aliveTill.compareTo(now) == -1 =>
         dropSession
         None
 

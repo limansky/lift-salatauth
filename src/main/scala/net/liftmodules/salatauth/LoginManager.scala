@@ -135,7 +135,7 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
    *   LiftRules.earlyInStateful.append(MyLoginManager.checkSession)
    * }}}
    */
-  def checkSession()(implicit m: Manifest[UserIdType]): Box[Req] => Unit = { _ =>
+  def checkSession(req: Box[Req])(implicit m: Manifest[UserIdType]): Unit = {
     Session.get.flatMap(s => findUserById(s.userId)).foreach(user => logUserIn(user, false))
   }
 
