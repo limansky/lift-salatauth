@@ -10,7 +10,7 @@ licenses += ("Apache 2.0 License", url("http://www.apache.org/licenses/LICENSE-2
 
 homepage := Some(url("http://github.com/limansky/lift-salatauth"))
 
-liftVersion <<= liftVersion ?? "2.5.1"
+liftVersion <<= liftVersion ?? "2.6-M3"
 
 liftEdition <<= liftVersion apply { _.substring(0,3) }
 
