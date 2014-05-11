@@ -114,6 +114,17 @@ trait Locs {
       Full(RedirectToIndexWithCookies)
     }) :: Nil
 
+  /**
+   * Creates login menu item.
+   *
+   * For example you can add to sitemap:
+   * {{{
+   *   val login = buildLogin("login", RequireNotLoggedIn :: Nil)
+   * }}}
+   *
+   * @param text localizable string to be set as menu item name.
+   * @param params menu loc parameters.
+   */
   def buildLogin(text: String, params: List[LocParam[Unit]]) = Menu(Loc(
     "login",
     loginUrl.split("/").toList.filterNot(_.isEmpty),
@@ -121,6 +132,12 @@ trait Locs {
     params
   ))
 
+  /**
+   * Creates logout menu item.
+   *
+   * @param text localizable string to be set as menu item name.
+   * @param params menu loc parameters.
+   */
   def buildLogout(text: String, params: List[LocParam[Unit]]) = Menu(Loc(
     "logout",
     logoutUrl.split("/").toList.filterNot(_.isEmpty),

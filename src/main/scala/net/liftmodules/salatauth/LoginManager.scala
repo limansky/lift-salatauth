@@ -72,6 +72,9 @@ trait LoginManager[UserType <: ProtoUser, UserIdType] {
    */
   def currentUser: Box[UserType] = curUser.is
 
+  /**
+   * Returns if the current user was authenticated
+   */
   def userAuthenticateded: Boolean = authenticated.is
 
   /**

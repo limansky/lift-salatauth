@@ -14,11 +14,19 @@ import net.liftweb.common.Box
 import java.util.UUID
 import net.liftweb.util.Helpers
 
+/**
+ * Represents user session in database
+ */
 case class Session[UserIdType](
   _id: UUID,
   userId: UserIdType,
   aliveTill: Date)
 
+/**
+ * Helper object to manage sessions.
+ *
+ * Usually you don't need to use this class, since it called by LoginManager.
+ */
 object Session {
   private lazy val collection = SalatAuth.sessionsCollection.vend
   private lazy val cookieName = SalatAuth.sessionCookieName.vend
@@ -26,14 +34,24 @@ object Session {
   private lazy val cookieDomain = SalatAuth.sessionCookieDomain.vend
   private lazy val sessionTtl = SalatAuth.sessionTtl.vend
 
+  /**
+   * Removes session cookie and DB entity.
+   */
   def dropSession(): Unit = {
     S.findCookie(cookieName).foreach { cookie =>
       val empty = new HTTPCookie(cookieName, Empty, cookieDomain, Full(cookiePath),
         Full(0), Empty, Empty)
       S.addCookie(empty)
+      cookie.value.flatMap(v => Helpers.tryo(UUID.fromString(v))).foreach(id =>
+        collection.map(_.remove(MongoDBObject("_id" -> id))))
     }
   }
 
+  /**
+   * Creates session for the user specified by the id.
+   *
+   * @param uid user id to create session.
+   */
   def createSession[UserIdType](uid: UserIdType)(implicit m: Manifest[UserIdType]): Unit = collection foreach { c =>
     val date = (new DateTime).plus(sessionTtl)
     val session = Session(UUID.randomUUID, uid, date.toDate())
@@ -44,6 +62,9 @@ object Session {
     S.addCookie(cookie)
   }
 
+  /**
+   * Returns session instance if it found in cookie and the database.
+   */
   def get[UserIdType]()(implicit m: Manifest[UserIdType]): Option[Session[UserIdType]] = {
     val s = for {
       coll <- collection
