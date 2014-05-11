@@ -58,10 +58,24 @@ object SalatAuth extends Factory {
    */
   val sessionsCollection = new FactoryMaker[Option[MongoCollection]](None) {}
 
+  /**
+   * Session expiration period. Default: 30 days.
+   */
   val sessionTtl = new FactoryMaker[ReadablePeriod](Days.days(30)) {}
 
+  /**
+   * Session cookie name. Default: SalatAuth.
+   */
   val sessionCookieName = new FactoryMaker[String]("SalatAuth") {}
+
+  /**
+   * Session cookie path. Default: /.
+   */
   val sessionCookiePath = new FactoryMaker[String]("/") {}
+
+  /**
+   * Session cookie domain.
+   */
   val sessionCookieDomain = new FactoryMaker[Option[String]](None) {}
 
   /**

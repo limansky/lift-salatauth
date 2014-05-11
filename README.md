@@ -116,6 +116,18 @@ def siteMap() = SiteMap(
 
 In this example user has to be logged in for all pages except index, but to see users he must have "admin" role, and to see the reports he must have corresponding permission.
 
+### Session handling
+
+  Session support was added in 1.1-SNAPSHOT.  This feature allows you to add "remember me" functionality.  To do it you need to setup cookie settings you your Boot.scala, and add session check hook:
+```Scala
+SalatAuth.loginManager.default.set(MyLoginManager)
+SalatAuth.sessionCookieName.default.set("MyAppLoginCookie")
+SalatAuth.sessionsCollection.default.set(Some(mongoDB("authcookies")))
+LiftRules.earlyInStateful.append(MyLoginManager.checkSession)
+```
+
+Now you can pass additional parameter to LoginManager.logUserIn function to set if user was authorized and shall the login cookie be created.
+
 [Lift]: http://liftweb.net
 [Salat]: https://github.com/novus/salat
 [lift-mongoauth]: https://github.com/eltimn/lift-mongoauth
