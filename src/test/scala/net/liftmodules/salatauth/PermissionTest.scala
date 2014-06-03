@@ -23,32 +23,32 @@ class PermissionTest extends FlatSpec with ShouldMatchers {
 
   "Permissions" should "handle only domain" in {
 
-    Permission("test").implies(Permission.all) should be (true)
-    Permission("test").implies(Permission("test")) should be (true)
-    Permission("test").implies(Permission("toast")) should be (false)
+    Permission("test").implies(Permission.all) should be(true)
+    Permission("test").implies(Permission("test")) should be(true)
+    Permission("test").implies(Permission("toast")) should be(false)
   }
 
   it should "handle action value" in {
     val p = Permission("employee", "view")
 
-    p.implies(Permission("employee", "edit")) should be (false)
-    p.implies(Permission("employee", "view")) should be (true)
-    p.implies(Permission("employee")) should be (true)
-    p.implies(Permission("user")) should be (false)
-    p.implies(Permission("user", "view")) should be (false)
-    p.implies(Permission.all) should be (true)
+    p.implies(Permission("employee", "edit")) should be(false)
+    p.implies(Permission("employee", "view")) should be(true)
+    p.implies(Permission("employee")) should be(true)
+    p.implies(Permission("user")) should be(false)
+    p.implies(Permission("user", "view")) should be(false)
+    p.implies(Permission.all) should be(true)
   }
 
   it should "handle entity value" in {
     val p = Permission("user", "view", "user31")
 
-    p.implies(Permission("user", "view", "user33")) should be (false)
-    p.implies(Permission("user", "view", "user31")) should be (true)
-    p.implies(Permission("state", "view", "user31")) should be (false)
-    p.implies(Permission("user", "edit", "user31")) should be (false)
-    p.implies(Permission("user", "view")) should be (true)
-    p.implies(Permission("user")) should be (true)
-    p.implies(Permission.all) should be (true)
+    p.implies(Permission("user", "view", "user33")) should be(false)
+    p.implies(Permission("user", "view", "user31")) should be(true)
+    p.implies(Permission("state", "view", "user31")) should be(false)
+    p.implies(Permission("user", "edit", "user31")) should be(false)
+    p.implies(Permission("user", "view")) should be(true)
+    p.implies(Permission("user")) should be(true)
+    p.implies(Permission.all) should be(true)
   }
 
 }

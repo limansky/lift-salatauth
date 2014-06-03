@@ -25,6 +25,14 @@ For Lift 3.0.x:
 
 ```
 
+  Or you can use current snapshot version:
+  [![Build Status](https://travis-ci.org/limansky/lift-salatauth.svg?branch=master)](https://travis-ci.org/limansky/lift-salatauth)
+
+```
+"net.liftmodules" %% "salatauth_2.6" % "1.1-SNAPSHOT"
+
+```
+
 ## Usage
 
   Lift SalatAuth provides several base classes and default implementations for them. You should choose if you want to implement them yourself or use default implementation.
