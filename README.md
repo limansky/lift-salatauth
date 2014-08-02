@@ -9,19 +9,19 @@
 For Lift 2.5.x:
 
 ```
-"net.liftmodules" %% "salatauth_2.5" % "1.0"
+"net.liftmodules" %% "salatauth_2.5" % "1.1"
 
 ```
 For Lift 2.6.x:
 
 ```
-"net.liftmodules" %% "salatauth_2.6" % "1.0"
+"net.liftmodules" %% "salatauth_2.6" % "1.1"
 
 ```
 For Lift 3.0.x:
 
 ```
-"net.liftmodules" %% "salatauth_3.0" % "1.0"
+"net.liftmodules" %% "salatauth_3.0" % "1.1"
 
 ```
 
