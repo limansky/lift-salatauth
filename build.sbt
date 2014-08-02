@@ -4,7 +4,7 @@ description := "Lift Salat authentication and authorization module"
 
 organization := "net.liftmodules"
 
-version := "1.1-SNAPSHOT"
+version := "1.1"
 
 licenses += ("Apache 2.0 License", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
