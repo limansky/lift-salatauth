@@ -29,7 +29,7 @@ For Lift 3.0.x:
   [![Build Status](https://travis-ci.org/limansky/lift-salatauth.svg?branch=master)](https://travis-ci.org/limansky/lift-salatauth)
 
 ```
-"net.liftmodules" %% "salatauth_2.6" % "1.1-SNAPSHOT"
+"net.liftmodules" %% "salatauth_2.6" % "1.2-SNAPSHOT"
 
 ```
 
@@ -126,7 +126,7 @@ In this example user has to be logged in for all pages except index, but to see 
 
 ### Session handling
 
-  Session support was added in 1.1-SNAPSHOT.  This feature allows you to add "remember me" functionality.  To do it you need to setup cookie settings you your Boot.scala, and add session check hook:
+  Session support was added in 1.1.  This feature allows you to add "remember me" functionality.  To do it you need to setup cookie settings you your Boot.scala, and add session check hook:
 ```Scala
 SalatAuth.loginManager.default.set(MyLoginManager)
 SalatAuth.sessionCookieName.default.set("MyAppLoginCookie")
@@ -134,7 +134,9 @@ SalatAuth.sessionsCollection.default.set(Some(mongoDB("authcookies")))
 LiftRules.earlyInStateful.append(MyLoginManager.checkSession)
 ```
 
-Now you can pass additional parameter to LoginManager.logUserIn function to set if user was authorized and shall the login cookie be created.
+Now you can pass additional parameter to LoginManager.logUserIn function to set if user was authenticated and shall the login cookie be created.
+
+In addition you can check if the user was authenticated using `RequireAuthenticated` parameter in your site map.
 
 [Lift]: http://liftweb.net
 [Salat]: https://github.com/novus/salat
