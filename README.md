@@ -1,6 +1,6 @@
 # Lift SalatAuth module
 
-   Authentication and authorization module for [Lift][Lift] web framework based on [Salat][Salat] library.  This project inspired by [lift-mongoauth][lift-mongoauth] module.  Currently it doesn't support "remember me" functionality, but I'm going to add it in the next release.  The goal is to avoid using different ORMs in project using Salat.
+   Authentication and authorization module for [Lift][Lift] web framework based on [Salat][Salat] library.  This project inspired by [lift-mongoauth][lift-mongoauth] module.  The goal is to avoid using different ORMs in project using Salat.
 
 ## Installing
 
