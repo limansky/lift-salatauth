@@ -16,9 +16,9 @@ liftEdition <<= liftVersion apply { _.substring(0,3) }
 
 moduleName <<= (name, liftEdition) { (n, e) => n + "_" + e }
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.6"
 
-crossScalaVersions := Seq("2.10.4", "2.9.2")
+crossScalaVersions := Seq("2.10.5", "2.9.2")
 
 resolvers += "CB Central Mirror" at "http://repo.cloudbees.com/content/groups/public"
 
@@ -32,7 +32,7 @@ libraryDependencies += "org.mindrot"     %  "jbcrypt"        % "0.3m"    % "comp
 
 libraryDependencies <++= scalaVersion { sv =>
   val salatV = if (sv == "2.9.2") "1.9.5" else "1.9.9"
-  val scalatestV = if (sv == "2.9.2") "1.9.2" else "2.2.3"
+  val scalatestV = if (sv == "2.9.2") "1.9.2" else "2.2.4"
   Seq("com.novus"       %% "salat"          % salatV      % "provided",
       "org.scalatest"   %% "scalatest"      % scalatestV  % "test"
   )
