@@ -10,13 +10,13 @@ licenses += ("Apache 2.0 License", url("http://www.apache.org/licenses/LICENSE-2
 
 homepage := Some(url("http://github.com/limansky/lift-salatauth"))
 
-liftVersion <<= liftVersion ?? "2.6"
+liftVersion <<= liftVersion ?? "2.6.2"
 
 liftEdition <<= liftVersion apply { _.substring(0,3) }
 
 moduleName <<= (name, liftEdition) { (n, e) => n + "_" + e }
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 crossScalaVersions := Seq("2.10.5", "2.9.2")
 
