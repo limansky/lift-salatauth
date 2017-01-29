@@ -1,3 +1,5 @@
+import LiftModule._
+
 name := "salatauth"
 
 description := "Lift Salat authentication and authorization module"
@@ -10,19 +12,19 @@ licenses += ("Apache 2.0 License", url("http://www.apache.org/licenses/LICENSE-2
 
 homepage := Some(url("http://github.com/limansky/lift-salatauth"))
 
-liftVersion <<= liftVersion ?? "2.6.3"
+liftVersion := "2.6.3"
 
-liftEdition <<= liftVersion apply { _.substring(0,3) }
+liftEdition := liftVersion.value.substring(0,3)
 
-moduleName <<= (name, liftEdition) { (n, e) => n + "_" + e }
+moduleName := name.value + "_" + liftEdition.value
 
 scalaVersion := "2.11.8"
 
 crossScalaVersions := Seq("2.10.6")
 
-resolvers += "CB Central Mirror" at "http://repo.cloudbees.com/content/groups/public"
+resolvers += "CB Central Mirror" at "https://repo.cloudbees.com/content/groups/public"
 
-resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
+// resolvers += "Java.net Maven2 Repository" at "https://download.java.net/maven/2/"
 
 libraryDependencies ++= Seq(
   "net.liftweb"      %% "lift-webkit"    % liftVersion.value    % "provided",

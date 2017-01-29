@@ -31,7 +31,7 @@ package net.liftmodules.salatauth
  * }}}
  */
 case class Permission(
-  domain: String,
+    domain: String,
     action: String = Permission.wildcardToken,
     entity: String = Permission.wildcardToken
 ) {
