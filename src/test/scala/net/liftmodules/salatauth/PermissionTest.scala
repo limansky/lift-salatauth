@@ -17,9 +17,9 @@
 package net.liftmodules.salatauth
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 
-class PermissionTest extends FlatSpec with ShouldMatchers {
+class PermissionTest extends FlatSpec with Matchers {
 
   "Permissions" should "handle only domain" in {
 

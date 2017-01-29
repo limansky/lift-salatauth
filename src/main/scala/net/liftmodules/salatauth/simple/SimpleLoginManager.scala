@@ -18,8 +18,8 @@ package net.liftmodules.salatauth
 package simple
 
 import org.bson.types.ObjectId
-import com.novus.salat._
-import com.novus.salat.global._
+import salat._
+import salat.global._
 import com.mongodb.casbah.Imports._
 
 object SimpleLoginManager extends LoginManager[SimpleUser, ObjectId] {

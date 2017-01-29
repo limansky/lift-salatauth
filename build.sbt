@@ -4,39 +4,32 @@ description := "Lift Salat authentication and authorization module"
 
 organization := "net.liftmodules"
 
-version := "1.2-SNAPSHOT"
+version := "1.2"
 
 licenses += ("Apache 2.0 License", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 homepage := Some(url("http://github.com/limansky/lift-salatauth"))
 
-liftVersion <<= liftVersion ?? "2.6.2"
+liftVersion <<= liftVersion ?? "2.6.3"
 
 liftEdition <<= liftVersion apply { _.substring(0,3) }
 
 moduleName <<= (name, liftEdition) { (n, e) => n + "_" + e }
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
-crossScalaVersions := Seq("2.10.5", "2.9.2")
+crossScalaVersions := Seq("2.10.6")
 
 resolvers += "CB Central Mirror" at "http://repo.cloudbees.com/content/groups/public"
 
 resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
 
-libraryDependencies <+= liftVersion { v =>
-  "net.liftweb"     %% "lift-webkit"    % v         % "provided"
-}
-
-libraryDependencies += "org.mindrot"     %  "jbcrypt"        % "0.3m"    % "compile"
-
-libraryDependencies <++= scalaVersion { sv =>
-  val salatV = if (sv == "2.9.2") "1.9.5" else "1.9.9"
-  val scalatestV = if (sv == "2.9.2") "1.9.2" else "2.2.4"
-  Seq("com.novus"       %% "salat"          % salatV      % "provided",
-      "org.scalatest"   %% "scalatest"      % scalatestV  % "test"
-  )
-}
+libraryDependencies ++= Seq(
+  "net.liftweb"      %% "lift-webkit"    % liftVersion.value    % "provided",
+  "org.mindrot"      %  "jbcrypt"        % "0.3m"               % "compile",
+  "com.github.salat" %% "salat"          % "1.10.0"             % "provided",
+  "org.scalatest"    %% "scalatest"      % "3.0.1"              % "test"
+)
 
 scalariformSettings
 

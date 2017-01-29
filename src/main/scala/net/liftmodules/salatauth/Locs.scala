@@ -84,8 +84,7 @@ trait Locs {
   def HasAnyPermission(permissions: Permission*) = If({
     val ps = permissions.toList
     () => ps.exists(loginManager.hasPermission)
-  }, () => RedirectToLoginWithReferrer
-  )
+  }, () => RedirectToLoginWithReferrer)
 
   /**
    * Allows access if the user is logged in.

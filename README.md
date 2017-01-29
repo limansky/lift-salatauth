@@ -6,22 +6,23 @@
 
   The module is available in Sonatype repository. So, if you using sbt just add it to libraryDependencies.
 
-For Lift 2.5.x:
+For Lift 3.0.x `lift-salatauth` suports only Scala 2.11 (Scala 2.12 is not available yet, because there is not Salat for Scala 2.12):
+
+```
+"net.liftmodules" %% "salatauth_3.0" % "1.2"
+
+```
+For Lift 2.6.x it supports Scala 2.10 and 2.11:
+
+```
+"net.liftmodules" %% "salatauth_2.6" % "1.2"
+
+```
+
+For Lift 2.5.x use `lift-salatauth` 1.1 which supports Scala 2.10 and 2.9.2:
 
 ```
 "net.liftmodules" %% "salatauth_2.5" % "1.1"
-
-```
-For Lift 2.6.x:
-
-```
-"net.liftmodules" %% "salatauth_2.6" % "1.1"
-
-```
-For Lift 3.0.x:
-
-```
-"net.liftmodules" %% "salatauth_3.0" % "1.1"
 
 ```
 
@@ -29,7 +30,7 @@ For Lift 3.0.x:
   [![Build Status](https://travis-ci.org/limansky/lift-salatauth.svg?branch=master)](https://travis-ci.org/limansky/lift-salatauth)
 
 ```
-"net.liftmodules" %% "salatauth_2.6" % "1.2-SNAPSHOT"
+"net.liftmodules" %% "salatauth_2.6" % "1.3-SNAPSHOT"
 
 ```
 

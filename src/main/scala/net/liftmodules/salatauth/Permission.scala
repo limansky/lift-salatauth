@@ -30,9 +30,11 @@ package net.liftmodules.salatauth
  * Permission("users", "edit", "123")
  * }}}
  */
-case class Permission(domain: String,
+case class Permission(
+  domain: String,
     action: String = Permission.wildcardToken,
-    entity: String = Permission.wildcardToken) {
+    entity: String = Permission.wildcardToken
+) {
 
   def implies(p: Permission): Boolean = {
     p match {

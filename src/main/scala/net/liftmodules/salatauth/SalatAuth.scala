@@ -98,7 +98,8 @@ object SalatAuth extends Factory {
     sessionCollection: Option[MongoCollection],
     seesionTtl: ReadablePeriod,
     simpleCollection: Option[MongoCollection],
-    loginManager: LoginManager[_, _]): Unit = {
+    loginManager: LoginManager[_, _]
+  ): Unit = {
     this.indexUrl.default.set(indexUrl)
     this.loginUrl.default.set(loginUrl)
     this.logoutUrl.default.set(logoutUrl)

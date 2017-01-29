@@ -20,8 +20,8 @@ import net.liftweb.util.Helpers._
 import org.mindrot.jbcrypt.BCrypt
 import com.mongodb.casbah.query.Imports._
 import org.bson.types.ObjectId
-import com.novus.salat._
-import com.novus.salat.global._
+import salat._
+import salat.global._
 
 /**
  * User entity prototype.
@@ -45,7 +45,8 @@ import com.novus.salat.global._
 abstract class ProtoUser(
     val username: String,
     val password: String,
-    val roles: Set[String]) {
+    val roles: Set[String]
+) {
 
   private lazy val rolesCollection = SalatAuth.rolesCollection.vend
 

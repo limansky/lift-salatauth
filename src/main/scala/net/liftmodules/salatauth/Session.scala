@@ -7,8 +7,8 @@ import net.liftweb.http.S
 import net.liftweb.common.Full
 import net.liftweb.common.Empty
 import org.joda.time.DateTime
-import com.novus.salat._
-import com.novus.salat.global._
+import salat._
+import salat.global._
 import com.mongodb.casbah.query.Imports._
 import net.liftweb.common.Box
 import java.util.UUID
@@ -20,7 +20,8 @@ import net.liftweb.util.Helpers
 case class Session[UserIdType](
   _id: UUID,
   userId: UserIdType,
-  aliveTill: Date)
+  aliveTill: Date
+)
 
 /**
  * Helper object to manage sessions.
